@@ -4,90 +4,120 @@
   </div>
 </header>
 
-<div class="row mt-25">
-  <div class="col-sm-6 offset-3">
-    <div class="text-center">
-      <h2>
-        Contact
-      </h2>
+<div class="container">
+  <div class="row mt-25">
+    <div class="col-8 offset-2">
+      <div class="text-center">
+        <h2>
+          Contact
+        </h2>
 
-    </div>
-    <form class="mt-25">
-      <div class="form-row">
-        <div class="form-group col-6">
-          <label>First Name</label>
-          <input type="text" class="form-control" placeholder="First Name">
-        </div>
-        <div class="form-group col-6">
-          <label>Last Name</label>
-          <input type="text" class="form-control" placeholder="Last Name">
-        </div>
       </div>
-
-
-      <section>
-        <div class="form-group">
-          <label>Street</label>
-          <input type="text" class="form-control" placeholder="1234 Main St">
-        </div>
+      <form class="mt-25">
         <div class="form-row">
           <div class="form-group col-6">
-            <label>City</label>
-            <input type="text" class="form-control">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" placeholder="First Name">
           </div>
-          <div class="form-group col-4">
-            <label>State</label>
-            <select class="form-control">
-              <option value="" disabled>Choose a state</option>
-              <!-- <option *nstate of stateOptions" [ngValue]="state">
-                {{ state }}
-              </option> -->
-            </select>
-          </div>
-          <div class="form-group col-2">
-            <label>Zip</label>
-            <input type="text" class="form-control">
+          <div class="form-group col-6">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" placeholder="Last Name">
           </div>
         </div>
-      </section>
 
-      <h3>Emails</h3>
-
-      <section>
-        <div class="form-row">
-          <div class="form-group col-10">
-            <label>Email</label>
-            <input type="text" class="form-control" placeholder="email@example.com">
+        <section>
+          <div class="form-group">
+            <label class="form-label">Street</label>
+            <input type="text" class="form-control" placeholder="1234 Main St">
           </div>
-          <div class="form-group col-2 mt-25">
-            <button class="btn btn-info" type="button">+</button>
-            <button class="btn btn-success" type="button">-</button>
+          <div class="form-row">
+            <div class="form-group col-3">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="form-group col-3">
+              <label class="form-label">Country</label>
+              <select class="form-control">
+                <option value="">--</option>
+                <option *ngFor="let country of countryOptions" [ngValue]="country.key">
+                  {{ country.value }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-3">
+              <label class="form-label">State</label>
+              <select class="form-control">
+                <option value="">--</option>
+                <option *ngFor="let state of stateOptions" [ngValue]="state.key">
+                  {{ state.value }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-3">
+              <label class="form-label">Zip</label>
+              <input type="text" class="form-control">
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <h3>Phones</h3>
+        <h3>Emails</h3>
 
-      <section>
-        <div class="form-row">
-          <div class="form-group col-10">
-            <label>Phone</label>
-            <input type="text" class="form-control" placeholder="55555555">
+        <section>
+          <div class="form-row">
+            <div class="form-group col-10">
+              <label class="form-label">Email</label>
+              <input type="text" class="form-control" placeholder="email@example.com">
+            </div>
+            <div class="form-group col-2 mt-25">
+              <button class="btn btn-info" type="button">+</button>
+              <button class="btn btn-success" type="button">-</button>
+            </div>
           </div>
-          <div class="form-group col-2 mt-25">
-          <button class="btn btn-info" type="button">+</button>
-            <button class="btn btn-success" type="button">-</button>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <p>
-        <button class="btn btn-success" type="submit"><i class="fas fa-save"></i>
-          Save</button>
-        <button class="btn btn-warning"><i class="fas fa-snowplow"></i> Clear</button>
-      </p>
-    </form>
+        <h3>Phones</h3>
+
+        <section>
+          <div class="form-row">
+            <div class="form-group col-10">
+              <label class="form-label">Phone</label>
+              <input type="text" class="form-control" placeholder="55555555">
+            </div>
+            <div class="form-group col-2 mt-25">
+              <button class="btn btn-info" type="button">+</button>
+              <button class="btn btn-success" type="button">-</button>
+            </div>
+          </div>
+        </section>
+
+        <p>
+          <button class="btn btn-success" type="submit"><i class="fas fa-save"></i>
+            Save</button>
+          <button class="btn btn-warning"><i class="fas fa-snowplow"></i> Clear</button>
+        </p>
+      </form>
+
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Emails</th>
+            <th scope="col">Phones</th>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contact of contacts$ | async; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ contact.first_name + ' ' + contact.last_name }}</td>
+            <td>{{ contact.email.join(', ') }}</td>
+            <td>{{ contact.phone.join(', ') }}</td>
+            <td>{{ getFullAddress(contact) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
-
 </div>
