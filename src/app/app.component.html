@@ -13,31 +13,32 @@
         </h2>
 
       </div>
-      <form class="mt-25">
+
+      <form [formGroup]="newFormGroup" class="mt-25">
         <div class="form-row">
           <div class="form-group col-6">
             <label class="form-label">First Name</label>
-            <input type="text" class="form-control" placeholder="First Name">
+            <input formControlName="first_name" type="text" class="form-control" [class.error]="!newFormGroup.controls['first_name'].untouched && newFormGroup.controls['first_name'].invalid" placeholder="First Name">
           </div>
           <div class="form-group col-6">
             <label class="form-label">Last Name</label>
-            <input type="text" class="form-control" placeholder="Last Name">
+            <input formControlName="last_name" type="text" class="form-control" [class.error]="!newFormGroup.controls['last_name'].untouched && newFormGroup.controls['last_name'].invalid" placeholder="Last Name">
           </div>
         </div>
 
         <section>
           <div class="form-group">
             <label class="form-label">Street</label>
-            <input type="text" class="form-control" placeholder="1234 Main St">
+            <input formControlName="street" type="text" class="form-control" placeholder="1234 Main St">
           </div>
           <div class="form-row">
             <div class="form-group col-3">
               <label class="form-label">City</label>
-              <input type="text" class="form-control">
+              <input formControlName="city" type="text" class="form-control">
             </div>
             <div class="form-group col-3">
               <label class="form-label">Country</label>
-              <select class="form-control">
+              <select formControlName="country" class="form-control">
                 <option value="">--</option>
                 <option *ngFor="let country of countryOptions" [ngValue]="country.key">
                   {{ country.value }}
@@ -46,7 +47,7 @@
             </div>
             <div class="form-group col-3">
               <label class="form-label">State</label>
-              <select class="form-control">
+              <select formControlName="state" class="form-control">
                 <option value="">--</option>
                 <option *ngFor="let state of stateOptions" [ngValue]="state.key">
                   {{ state.value }}
@@ -55,7 +56,7 @@
             </div>
             <div class="form-group col-3">
               <label class="form-label">Zip</label>
-              <input type="text" class="form-control">
+              <input formControlName="zip" type="text" class="form-control">
             </div>
           </div>
         </section>
@@ -64,11 +65,16 @@
 
         <section>
           <div class="form-row">
-            <div class="form-group col-10">
-              <label class="form-label">Email</label>
-              <input type="text" class="form-control" placeholder="email@example.com">
+            <div
+             formArrayName="emails"
+             *ngFor="let email of emails; let i = index"
+             class="form-group col-10"
+            >
+              <ng-container [formGroupName]="i">
+                <input formControlName="email" type="text" class="form-control" placeholder="email@example.com">
+              </ng-container>
             </div>
-            <div class="form-group col-2 mt-25">
+            <div class="form-group col-2">
               <button class="btn btn-info" type="button">+</button>
               <button class="btn btn-success" type="button">-</button>
             </div>
@@ -80,10 +86,9 @@
         <section>
           <div class="form-row">
             <div class="form-group col-10">
-              <label class="form-label">Phone</label>
               <input type="text" class="form-control" placeholder="55555555">
             </div>
-            <div class="form-group col-2 mt-25">
+            <div class="form-group col-2">
               <button class="btn btn-info" type="button">+</button>
               <button class="btn btn-success" type="button">-</button>
             </div>
@@ -91,8 +96,10 @@
         </section>
 
         <p>
-          <button class="btn btn-success" type="submit"><i class="fas fa-save"></i>
-            Save</button>
+          <button class="btn btn-success" (click)="saveContact()">
+            <i class="fas fa-save"></i>
+            Save
+          </button>
           <button class="btn btn-warning"><i class="fas fa-snowplow"></i> Clear</button>
         </p>
       </form>
