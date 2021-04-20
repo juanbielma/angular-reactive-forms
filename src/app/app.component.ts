@@ -20,7 +20,11 @@ export class AppComponent implements OnInit {
   newFormGroup: FormGroup
 
   get emails() {
-    return (this.newFormGroup.get('emails') as FormArray)['controls']
+    return (this.newFormGroup.get('emails') as FormArray)
+  }
+
+  get phones() {
+    return (this.newFormGroup.get('phones') as FormArray)
   }
 
   constructor(
@@ -38,6 +42,11 @@ export class AppComponent implements OnInit {
         emails: this.formBuilder.array([
           this.formBuilder.group({
             email: this.formBuilder.control('', [Validators.email])
+          })
+        ]),
+        phones: this.formBuilder.array([
+          this.formBuilder.group({
+            phone: this.formBuilder.control('')
           })
         ]),
       })
@@ -61,5 +70,29 @@ export class AppComponent implements OnInit {
 
   saveContact() {
     console.log('this.newFormGroup.getRawValue', this.newFormGroup.getRawValue())
+  }
+
+  addEmailRow() {
+    const newEmailsFormGroup = this.formBuilder.group({
+      email: this.formBuilder.control('', [Validators.email])
+    })
+    this.emails.push(newEmailsFormGroup)
+  }
+
+  removeEmailRow() {
+    const emailsLength = this.emails.length -1
+    this.emails.removeAt(emailsLength)
+  }
+
+  addPhoneRow() {
+    const newPhoneFormGroup = this.formBuilder.group({
+      phone: this.formBuilder.control('')
+    })
+    this.phones.push(newPhoneFormGroup)
+  }
+
+  removePhoneRow() {
+    const phonesLength = this.phones.length -1
+    this.phones.removeAt(phonesLength)
   }
 }

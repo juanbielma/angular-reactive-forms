@@ -67,7 +67,7 @@
           <div class="form-row">
             <div
              formArrayName="emails"
-             *ngFor="let email of emails; let i = index"
+             *ngFor="let email of emails.controls; let i = index"
              class="form-group col-10"
             >
               <ng-container [formGroupName]="i">
@@ -75,8 +75,8 @@
               </ng-container>
             </div>
             <div class="form-group col-2">
-              <button class="btn btn-info" type="button">+</button>
-              <button class="btn btn-success" type="button">-</button>
+              <button (click)="addEmailRow()" class="btn btn-info" type="button">+</button>
+              <button (click)="removeEmailRow()" class="btn btn-success" type="button">-</button>
             </div>
           </div>
         </section>
@@ -85,12 +85,18 @@
 
         <section>
           <div class="form-row">
-            <div class="form-group col-10">
-              <input type="text" class="form-control" placeholder="55555555">
+            <div
+             formArrayName="phones"
+             *ngFor="let phone of phones.controls; let i = index"
+             class="form-group col-10"
+            >
+              <ng-container [formGroupName]="i">
+                <input formControlName="phone" type="text" class="form-control" placeholder="55555555">
+              </ng-container>
             </div>
             <div class="form-group col-2">
-              <button class="btn btn-info" type="button">+</button>
-              <button class="btn btn-success" type="button">-</button>
+              <button (click)="addPhoneRow()" class="btn btn-info" type="button">+</button>
+              <button (click)="removePhoneRow()" class="btn btn-success" type="button">-</button>
             </div>
           </div>
         </section>
