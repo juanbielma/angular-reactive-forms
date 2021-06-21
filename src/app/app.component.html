@@ -18,95 +18,158 @@
         <div class="form-row">
           <div class="form-group col-6">
             <label class="form-label">First Name</label>
-            <input formControlName="first_name" type="text" class="form-control" [class.error]="!newFormGroup.controls['first_name'].untouched && newFormGroup.controls['first_name'].invalid" placeholder="First Name">
+            <input
+              formControlName="first_name"
+              type="text"
+              class="form-control"
+              placeholder="First Name"
+              (keydown.space)="noSpace()"
+              [class.error]="!newFormGroup.controls['first_name'].untouched && newFormGroup.controls['first_name'].invalid"
+            >
           </div>
+
           <div class="form-group col-6">
             <label class="form-label">Last Name</label>
-            <input formControlName="last_name" type="text" class="form-control" [class.error]="!newFormGroup.controls['last_name'].untouched && newFormGroup.controls['last_name'].invalid" placeholder="Last Name">
+            <input
+              formControlName="last_name"
+              type="text"
+              class="form-control"
+              placeholder="Last Name"
+              (keydown.space)="noSpace()"
+              [class.error]="!newFormGroup.controls['last_name'].untouched && newFormGroup.controls['last_name'].invalid"
+            >
           </div>
         </div>
 
         <section>
           <div class="form-group">
             <label class="form-label">Street</label>
-            <input formControlName="street" type="text" class="form-control" placeholder="1234 Main St">
+            <input
+              formControlName="street"
+              type="text"
+              class="form-control"
+              placeholder="1234 Main St"
+              [class.error]="!newFormGroup.controls['street'].untouched && newFormGroup.controls['street'].invalid"
+            >
           </div>
+
           <div class="form-row">
             <div class="form-group col-3">
               <label class="form-label">City</label>
-              <input formControlName="city" type="text" class="form-control">
+              <input
+                formControlName="city"
+                type="text"
+                class="form-control"
+                placeholder="Westmont"
+                [class.error]="!newFormGroup.controls['city'].untouched && newFormGroup.controls['city'].invalid"
+              >
             </div>
-            <div class="form-group col-3">
-              <label class="form-label">Country</label>
-              <select formControlName="country" class="form-control">
-                <option value="">--</option>
-                <option *ngFor="let country of countryOptions" [ngValue]="country.key">
-                  {{ country.value }}
-                </option>
-              </select>
-            </div>
+
             <div class="form-group col-3">
               <label class="form-label">State</label>
-              <select formControlName="state" class="form-control">
+              <select
+                formControlName="state"
+                class="form-control"
+                [class.error]="!newFormGroup.controls['state'].untouched && newFormGroup.controls['state'].invalid"
+              >
                 <option value="">--</option>
                 <option *ngFor="let state of stateOptions" [ngValue]="state.key">
                   {{ state.value }}
                 </option>
               </select>
             </div>
+
+            <div class="form-group col-3">
+              <label class="form-label">Country</label>
+              <select
+                formControlName="country"
+                class="form-control"
+                [class.error]="!newFormGroup.controls['country'].untouched && newFormGroup.controls['country'].invalid"
+              >
+                <option value="">--</option>
+                <option *ngFor="let country of countryOptions" [ngValue]="country.key">
+                  {{ country.value }}
+                </option>
+              </select>
+            </div>
+
             <div class="form-group col-3">
               <label class="form-label">Zip</label>
-              <input formControlName="zip" type="text" class="form-control">
+              <input
+                formControlName="zip"
+                type="number"
+                class="form-control"
+                placeholder="12345"
+                (keydown.space)="noSpace()"
+                [class.error]="!newFormGroup.controls['zip'].untouched && newFormGroup.controls['zip'].invalid"
+              >
             </div>
+
           </div>
         </section>
 
-        <h3>Emails</h3>
-
         <section>
+          <h3>Email(s)</h3>
           <div class="form-row">
             <div
              formArrayName="emails"
              *ngFor="let email of emails.controls; let i = index"
-             class="form-group col-10"
+             class="form-group col-12 df mb-0"
             >
               <ng-container [formGroupName]="i">
-                <input formControlName="email" type="text" class="form-control" placeholder="email@example.com">
+                <input
+                  formControlName="email"
+                  type="email"
+                  class="form-control col-10"
+                  placeholder="email@example.com"
+                  (keydown.space)="noSpace()"
+
+                >
               </ng-container>
-            </div>
-            <div class="form-group col-2">
-              <button (click)="addEmailRow()" class="btn btn-info" type="button">+</button>
-              <button (click)="removeEmailRow()" class="btn btn-success" type="button">-</button>
+              <div *ngIf="i === 0" class="form-group col-2">
+                <button (click)="removeEmailsRow()" class="btn btn-success mr-s" type="button" [disabled]="emails.length === 1">-</button>
+                <button (click)="addEmailsRow()" class="btn btn-info" type="button" [disabled]="emails.length === 3">+</button>
+              </div>
             </div>
           </div>
         </section>
 
-        <h3>Phones</h3>
-
+        
         <section>
+          <h3>Phone(s)</h3>
           <div class="form-row">
             <div
              formArrayName="phones"
              *ngFor="let phone of phones.controls; let i = index"
-             class="form-group col-10"
+             class="form-group col-12 df mb-0"
             >
               <ng-container [formGroupName]="i">
-                <input formControlName="phone" type="text" class="form-control" placeholder="55555555">
+                <input
+                  formControlName="phone"
+                  type="number"
+                  class="form-control col-10"
+                  placeholder="1234567891"
+                >
               </ng-container>
-            </div>
-            <div class="form-group col-2">
-              <button (click)="addPhoneRow()" class="btn btn-info" type="button">+</button>
-              <button (click)="removePhoneRow()" class="btn btn-success" type="button">-</button>
+              <div *ngIf="i === 0" class="form-group col-2">
+                <button (click)="removePhonesRow()" class="btn btn-success mr-s" type="button" [disabled]="phones.length === 1">-</button>
+                <button (click)="addPhonesRow()" class="btn btn-info" type="button" [disabled]="phones.length === 3">+</button>
+              </div>
             </div>
           </div>
         </section>
 
         <p>
-          <button class="btn btn-success" (click)="saveContact()">
-            <i class="fas fa-save"></i>
-            Save
+          <button class="btn btn-success mr-s" (click)="saveContact()">
+            <i class="fas fa-save">
+              Save
+            </i>
           </button>
-          <button class="btn btn-warning"><i class="fas fa-snowplow"></i> Clear</button>
+          <button class="btn btn-warning" (click)="clearContact()">
+            <i class="fas fa-snowplow">
+              Clear
+            </i>
+          </button>
         </p>
       </form>
 
@@ -124,8 +187,8 @@
           <tr *ngFor="let contact of contacts$ | async; let i = index">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{ contact.first_name + ' ' + contact.last_name }}</td>
-            <td>{{ contact.email.join(', ') }}</td>
-            <td>{{ contact.phone.join(', ') }}</td>
+            <td>{{ contact.emails.join(', ') }}</td>
+            <td>{{ contact.phones.join(', ') }}</td>
             <td>{{ getFullAddress(contact) }}</td>
           </tr>
         </tbody>
