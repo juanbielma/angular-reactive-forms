@@ -1,8 +1,8 @@
 export interface Contact {
   first_name: string,
   last_name: string,
-  phone: string[],
-  email: string[],
+  phones: string[],
+  emails: string[],
   city: string,
   country: string,
   state: string,
